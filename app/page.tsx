@@ -25,7 +25,7 @@ export default function Home() {
     }
   }, [typedText, isLoading]);
 
-  // Progress simulation for better UX
+  // Progress simulation
   useEffect(() => {
     if (isLoading) {
       const interval = setInterval(() => {
@@ -60,24 +60,10 @@ export default function Home() {
         throw new Error(err.error || 'Failed to generate');
       }
 
-      // ✅ Handle streaming response - shows results as they arrive
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          setOutput(buffer);
-          // Progress updates as data arrives
-          setProgress((prev) => Math.min(prev + 5, 95));
-        }
-      }
-
+      const data = await response.json();
+      setOutput(JSON.stringify(data, null, 2));
       setProgress(100);
-      setTimeout(() => setFadeIn(true), 300);
+      setTimeout(() => setFadeIn(true), 100);
 
     } catch (err: any) {
       setError(err.message);
@@ -86,7 +72,6 @@ export default function Home() {
     }
   };
 
-  // Get progress message based on progress value
   const getProgressMessage = () => {
     if (progress < 20) return '🔍 Understanding your interests...';
     if (progress < 40) return '🧠 Analyzing real-world problems...';
