@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { generateObject } from 'ai';
+import { streamObject } from 'ai';
 import { google } from '@ai-sdk/google';
 import { StudentInputSchema, ProjectIdeaSchema } from '@/lib/validators';
 import { buildSystemPrompt } from '@/services/prompts';
@@ -18,19 +18,17 @@ export async function POST(req: NextRequest) {
     const { interests, skills } = parseResult.data;
     const userPrompt = `Student Interests: ${interests}. Student Skills: ${skills}. Generate a unique, challenging but achievable final-year project.`;
 
-    // ✅ Using gemini-3.6-flash (the model recommended by Google)
-    const result = await generateObject({
-      model: google('gemini-3.6-flash'), // ← UPDATED
+    // ✅ Using Gemini 2.0 Flash - FASTER than 3.6 Flash
+    // ✅ Using streamObject - results appear progressively
+    const result = await streamObject({
+      model: google('gemini-2.0-flash-exp'),
       schema: ProjectIdeaSchema,
       system: buildSystemPrompt(),
       prompt: userPrompt,
       temperature: 0.7,
     });
 
-    return new Response(
-      JSON.stringify(result.object),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return result.toTextStreamResponse();
 
   } catch (error) {
     console.error('Fatal API Error:', error);

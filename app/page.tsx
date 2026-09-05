@@ -25,7 +25,7 @@ export default function Home() {
     }
   }, [typedText, isLoading]);
 
-  // Progress simulation
+  // Progress simulation for better UX
   useEffect(() => {
     if (isLoading) {
       const interval = setInterval(() => {
@@ -60,16 +60,40 @@ export default function Home() {
         throw new Error(err.error || 'Failed to generate');
       }
 
-      const data = await response.json();
-      setOutput(JSON.stringify(data, null, 2));
+      // ✅ Handle streaming response - shows results as they arrive
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          setOutput(buffer);
+          // Progress updates as data arrives
+          setProgress((prev) => Math.min(prev + 5, 95));
+        }
+      }
+
       setProgress(100);
-      setTimeout(() => setFadeIn(true), 100);
+      setTimeout(() => setFadeIn(true), 300);
 
     } catch (err: any) {
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Get progress message based on progress value
+  const getProgressMessage = () => {
+    if (progress < 20) return '🔍 Understanding your interests...';
+    if (progress < 40) return '🧠 Analyzing real-world problems...';
+    if (progress < 60) return '⚡ Designing core features...';
+    if (progress < 80) return '🛠️ Selecting tech stack...';
+    if (progress < 95) return '📝 Finalizing your blueprint...';
+    return '✨ Almost there...';
   };
 
   return (
@@ -134,15 +158,21 @@ export default function Home() {
           )}
 
           {isLoading && (
-            <div className="space-y-2">
-              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div className="space-y-3">
+              <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${Math.min(progress, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-slate-500 text-center animate-pulse">
-                🔮 {progress < 30 ? 'Analyzing your interests...' : progress < 60 ? 'Researching real-world problems...' : progress < 90 ? 'Designing your project blueprint...' : 'Finalizing your project plan...'}
+              <div className="flex items-center justify-center gap-2">
+                <span className="animate-spin h-4 w-4 border-2 border-indigo-500 border-t-transparent rounded-full" />
+                <p className="text-sm text-slate-600 font-medium animate-pulse">
+                  {getProgressMessage()}
+                </p>
+              </div>
+              <p className="text-xs text-slate-400 text-center">
+                ⏱️ This usually takes 5-10 seconds
               </p>
             </div>
           )}
