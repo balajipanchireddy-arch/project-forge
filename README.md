@@ -95,17 +95,6 @@ Each generated project includes:
 
 ---
 
-## 📸 Screenshots
 
-### Homepage
-![Homepage](https://via.placeholder.com/800x400/FFFFFF/6366F1?text=ProjectForge+Homepage)
-
-### Project Blueprint
-![Project Blueprint](https://via.placeholder.com/800x400/FFFFFF/6366F1?text=Guided+Project+Blueprint)
-
-### Loading Animation
-![Loading Animation](https://via.placeholder.com/800x400/FFFFFF/6366F1?text=Loading+with+Progress+Bar)
-
----
 
 ## 🏗️ Project Structure
