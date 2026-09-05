@@ -73,75 +73,75 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-cyberpunk min-h-screen text-white p-6 flex flex-col items-center relative overflow-hidden">
+    <main className="bg-white-theme min-h-screen text-slate-800 p-6 flex flex-col items-center relative overflow-hidden">
       <section className="w-full max-w-5xl relative z-10">
         {/* Header */}
-        <div className="text-center mb-8 backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-cyan-500/20 shadow-[0_0_50px_rgba(0,255,255,0.05)]">
-          <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
+        <div className="text-center mb-8 card-white p-8 rounded-2xl">
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
             {typedText || 'ProjectForge ⚡'}
           </h1>
-          <p className="text-cyan-300/60 mt-2 text-lg">Turn your skills into a final-year masterpiece.</p>
+          <p className="text-slate-500 mt-2 text-lg">Turn your skills into a final-year masterpiece.</p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6 backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-cyan-500/20 shadow-[0_0_50px_rgba(0,255,255,0.05)]">
+        <form onSubmit={handleSubmit} className="space-y-6 card-white p-8 rounded-2xl">
           <fieldset className="space-y-4">
             <legend className="sr-only">Project Preferences</legend>
 
             <div>
-              <label htmlFor="interests" className="block text-sm font-medium text-cyan-300">
-                What problems excite you? <span className="text-red-400">*</span>
+              <label htmlFor="interests" className="block text-sm font-medium text-slate-700">
+                What problems excite you? <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="interests"
                 aria-required="true"
                 rows={2}
-                className="w-full mt-1 p-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-cyan-300/30 focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition"
+                className="input-white w-full mt-1 p-3 bg-white/80 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition"
                 placeholder="e.g., Mental health, E-commerce logistics, Campus navigation..."
                 value={interests}
                 onChange={(e) => setInterests(e.target.value)}
                 disabled={isLoading}
               />
-              <p className="text-xs text-cyan-400/50 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 💡 Tip: Be specific about the problem you want to solve.
               </p>
             </div>
 
             <div>
-              <label htmlFor="skills" className="block text-sm font-medium text-cyan-300">
-                Your Tech Stack <span className="text-red-400">*</span>
+              <label htmlFor="skills" className="block text-sm font-medium text-slate-700">
+                Your Tech Stack <span className="text-red-500">*</span>
               </label>
               <input
                 id="skills"
                 type="text"
                 aria-required="true"
-                className="w-full mt-1 p-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-cyan-300/30 focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition"
+                className="input-white w-full mt-1 p-3 bg-white/80 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition"
                 placeholder="e.g., React, Node.js, Python, Flutter..."
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
                 disabled={isLoading}
               />
-              <p className="text-xs text-cyan-400/50 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 💡 Tip: List the technologies you're comfortable with.
               </p>
             </div>
           </fieldset>
 
           {error && (
-            <div role="alert" className="bg-red-500/20 border border-red-500 p-3 rounded-lg text-red-300">
+            <div role="alert" className="bg-red-50 border border-red-200 p-3 rounded-lg text-red-600">
               ⚠️ {error}
             </div>
           )}
 
           {isLoading && (
             <div className="space-y-2">
-              <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+              <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 rounded-full transition-all duration-500 ease-out"
+                  className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${Math.min(progress, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-cyan-400/60 text-center animate-pulse">
+              <p className="text-xs text-slate-500 text-center animate-pulse">
                 🔮 {progress < 30 ? 'Analyzing your interests...' : progress < 60 ? 'Researching real-world problems...' : progress < 90 ? 'Designing your project blueprint...' : 'Finalizing your project plan...'}
               </p>
             </div>
@@ -150,7 +150,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={isLoading || !interests || !skills}
-            className="w-full py-4 px-6 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed rounded-xl font-semibold transition-all text-lg focus:ring-4 focus:ring-cyan-300 outline-none flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(0,255,255,0.2)] hover:shadow-[0_0_50px_rgba(0,255,255,0.4)]"
+            className="btn-gradient w-full py-4 px-6 text-white disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed rounded-xl font-semibold transition-all text-lg focus:ring-4 focus:ring-indigo-300 outline-none flex items-center justify-center gap-3 shadow-lg"
             aria-busy={isLoading}
           >
             {isLoading ? (

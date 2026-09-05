@@ -81,7 +81,6 @@ const generateExplanations = (project: ProjectIdea) => {
     return { step: s, explanation };
   });
 
-  // Generate "Why this matters" for problem statement
   const problemExplanation = project.problem_statement.length > 50 
     ? 'This is a real-world issue that affects real people. By solving it, your project will have meaningful impact.'
     : 'Try to narrow down your problem to a specific user pain point.';
@@ -109,7 +108,7 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
   }, [rawOutput]);
 
   if (error) {
-    return <div className="text-red-400 bg-red-900/20 p-4 rounded-lg">Failed to parse project data.</div>;
+    return <div className="text-red-600 bg-red-50 p-4 rounded-lg border border-red-200">Failed to parse project data.</div>;
   }
 
   if (!project) {
@@ -152,23 +151,23 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
   };
 
   return (
-    <section className="space-y-8 backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-cyan-500/20 shadow-[0_0_50px_rgba(0,255,255,0.05)]">
+    <section className="space-y-8 card-white p-8 rounded-2xl">
       
       {/* Section 1: Project Overview */}
-      <div className="border-b border-cyan-500/20 pb-6">
+      <div className="border-b border-slate-200 pb-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+            <h2 className="text-3xl font-bold text-slate-800">
               {project.title}
             </h2>
             <div className="flex flex-wrap gap-3 mt-3">
-              <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-sm border border-emerald-500/30">
+              <span className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm border border-emerald-200">
                 ⏱️ 16 Weeks
               </span>
-              <span className="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm border border-yellow-500/30">
+              <span className="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-sm border border-amber-200">
                 📊 Medium Difficulty
               </span>
-              <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30">
+              <span className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm border border-purple-200">
                 👥 2-3 Person Team
               </span>
             </div>
@@ -177,11 +176,11 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
       </div>
 
       {/* Section 2: Problem Statement */}
-      <div className="bg-yellow-500/10 border-l-4 border-yellow-400 p-4 rounded-r-lg">
-        <h3 className="font-semibold text-yellow-400 text-lg mb-2">🎯 Understanding the Problem</h3>
-        <p className="text-slate-200 text-lg">{project.problem_statement}</p>
-        <div className="mt-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-          <p className="text-sm text-yellow-300/80">
+      <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg">
+        <h3 className="font-semibold text-amber-700 text-lg mb-2">🎯 Understanding the Problem</h3>
+        <p className="text-slate-700 text-lg">{project.problem_statement}</p>
+        <div className="mt-3 p-3 bg-amber-100/50 rounded-lg border border-amber-200">
+          <p className="text-sm text-amber-800">
             <span className="font-bold">💡 Why this matters:</span> {problemExplanation}
           </p>
         </div>
@@ -189,12 +188,12 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
 
       {/* Section 3: Core Features */}
       <div>
-        <h3 className="font-semibold text-green-400 text-lg mb-3">⚡ Core Features</h3>
+        <h3 className="font-semibold text-emerald-600 text-lg mb-3">⚡ Core Features</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {featureExpl.map((f, i) => (
-            <div key={i} className="bg-white/5 p-4 rounded-lg border border-white/10 hover:bg-white/10 transition">
-              <div className="font-medium text-white">{f.name}</div>
-              <div className="text-sm text-slate-400 mt-1">{f.explanation}</div>
+            <div key={i} className="bg-slate-50 p-4 rounded-lg border border-slate-200 hover:bg-slate-100 transition">
+              <div className="font-medium text-slate-800">{f.name}</div>
+              <div className="text-sm text-slate-500 mt-1">{f.explanation}</div>
             </div>
           ))}
         </div>
@@ -202,12 +201,12 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
 
       {/* Section 4: Tech Stack */}
       <div>
-        <h3 className="font-semibold text-purple-400 text-lg mb-3">🛠️ Tech Stack</h3>
+        <h3 className="font-semibold text-purple-600 text-lg mb-3">🛠️ Tech Stack</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {techExpl.map((t, i) => (
-            <div key={i} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-              <div className="font-medium text-white">{t.name}</div>
-              <div className="text-sm text-purple-300/80 mt-1">{t.explanation}</div>
+            <div key={i} className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+              <div className="font-medium text-slate-800">{t.name}</div>
+              <div className="text-sm text-purple-700 mt-1">{t.explanation}</div>
             </div>
           ))}
         </div>
@@ -215,15 +214,15 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
 
       {/* Section 5: Development Steps */}
       <div>
-        <h3 className="font-semibold text-cyan-400 text-lg mb-3">📅 Development Roadmap</h3>
+        <h3 className="font-semibold text-cyan-600 text-lg mb-3">📅 Development Roadmap</h3>
         <div className="space-y-3">
           {stepExpl.map((s, i) => (
-            <div key={i} className="bg-white/5 p-4 rounded-lg border border-white/10">
+            <div key={i} className="bg-slate-50 p-4 rounded-lg border border-slate-200">
               <div className="flex items-start gap-3">
-                <span className="text-cyan-400 font-bold min-w-[30px]">#{i+1}</span>
+                <span className="text-cyan-600 font-bold min-w-[30px]">#{i+1}</span>
                 <div>
-                  <div className="font-medium text-white">{s.step}</div>
-                  <div className="text-sm text-slate-400 mt-1">{s.explanation}</div>
+                  <div className="font-medium text-slate-800">{s.step}</div>
+                  <div className="text-sm text-slate-500 mt-1">{s.explanation}</div>
                 </div>
               </div>
             </div>
@@ -232,48 +231,48 @@ export function ProjectBlueprint({ rawOutput }: { rawOutput: string }) {
       </div>
 
       {/* Section 6: Improvements */}
-      <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
-        <h3 className="font-semibold text-blue-300 text-lg mb-3">🚀 Improvement Ideas</h3>
+      <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+        <h3 className="font-semibold text-blue-600 text-lg mb-3">🚀 Improvement Ideas</h3>
         <ul className="space-y-2">
           {project.improvements.map((im, i) => (
-            <li key={i} className="flex items-start gap-2 text-slate-300">
-              <span className="text-blue-400">▸</span>
+            <li key={i} className="flex items-start gap-2 text-slate-700">
+              <span className="text-blue-500">▸</span>
               <span>{im}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-          <p className="text-sm text-blue-300/80">
+        <div className="mt-3 p-3 bg-blue-100/50 rounded-lg border border-blue-200">
+          <p className="text-sm text-blue-800">
             💡 <span className="font-bold">How to learn more:</span> Start with the easiest improvement and build from there. Each improvement adds value to your project and impresses evaluators.
           </p>
         </div>
       </div>
 
       {/* Section 7: Next Steps */}
-      <div className="border-t border-cyan-500/20 pt-6 mt-4">
-        <h3 className="font-semibold text-white text-lg mb-4">✅ What Should You Do Now?</h3>
+      <div className="border-t border-slate-200 pt-6 mt-4">
+        <h3 className="font-semibold text-slate-800 text-lg mb-4">✅ What Should You Do Now?</h3>
         <div className="flex flex-wrap gap-4">
           <button
             onClick={handleSave}
-            className="px-6 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 rounded-lg border border-emerald-500/30 transition text-emerald-300 flex items-center gap-2"
+            className="px-6 py-2 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-200 transition text-emerald-700 flex items-center gap-2"
           >
             💾 {saved ? '✅ Saved!' : 'Save Project'}
           </button>
           <button
             onClick={handleShare}
-            className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg border border-blue-500/30 transition text-blue-300 flex items-center gap-2"
+            className="px-6 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition text-blue-700 flex items-center gap-2"
           >
             📤 Share with Team
           </button>
           <button
             onClick={handleDownload}
-            className="px-6 py-2 bg-purple-500/20 hover:bg-purple-500/30 rounded-lg border border-purple-500/30 transition text-purple-300 flex items-center gap-2"
+            className="px-6 py-2 bg-purple-50 hover:bg-purple-100 rounded-lg border border-purple-200 transition text-purple-700 flex items-center gap-2"
           >
             📥 Download as Text
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 rounded-lg border border-cyan-500/30 transition text-cyan-300 flex items-center gap-2"
+            className="px-6 py-2 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 transition text-slate-700 flex items-center gap-2"
           >
             🔄 Generate Another
           </button>
